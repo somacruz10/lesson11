@@ -1,21 +1,12 @@
 import { expect, test } from '@playwright/test'
 
 import { StatusCodes } from 'http-status-codes'
+import { OrderDto } from './DTO/OrderDto'
 
 test('123 post order with correct data should receive code 201', async ({ request }) => {
-    // prepare request body
-    const requestBody = {
-        status: 'OPEN',
-        courierId: 0,
-        customerName: 'string',
-        customerPhone: 'string',
-        comment: 'string',
-        id: 0,
-    }
-
     // Send a POST request to the server
-    const response = await request.post(`${process.env.STAGE_URL}/test-orders`, {
-        data: requestBody,
+    const response = await request.post(`https://backend.tallinn-learning.ee/test-orders`, {
+        data: OrderDto.generateRandomOrderDto(),
     })
     const responseBody = await response.json();
 
@@ -28,16 +19,9 @@ test('123 post order with correct data should receive code 201', async ({ reques
 
 test('post order with data without status field should receive code 200', async ({ request }) => {
     // prepare request body
-    const requestBody = {
-        courierId: 0,
-        customerName: 'string',
-        customerPhone: 'string',
-        comment: 'string',
-        id: 0,
-    }
     // Send a POST request to the server
     const response = await request.post('https://backend.tallinn-learning.ee/test-orders', {
-        data: requestBody,
+        data: OrderDto.generateRandomOrderDto(),
     })
     const responseBody = await response.json();
 
@@ -51,10 +35,10 @@ test('post order with data without status field should receive code 200', async 
 
 test('post order with empty data should receive code 200', async ({ request }) => {
     // prepare request body
-    const requestBody = {}
+    //const requestBody = {}
     // Send a POST request to the server
     const response = await request.post('https://backend.tallinn-learning.ee/test-orders', {
-        data: requestBody,
+        data: OrderDto.generateEmptyOrderDtoWithoutStatus(),
     })
     const responseBody = await response.json();
 
