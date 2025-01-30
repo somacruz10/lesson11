@@ -58,4 +58,5 @@ test.describe('Login tests', async () => {
     console.log(response.status())
     expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
   })
+
 })
