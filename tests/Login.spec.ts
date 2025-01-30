@@ -10,7 +10,9 @@ test.describe('Login tests', async () => {
 
     console.log(await response.text())
     expect(response.status()).toBe(StatusCodes.OK)
-    expect(/^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/.test(await response.text())).toBeTruthy()
+    expect(
+      /^eyJhb[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/.test(await response.text()),
+    ).toBeTruthy()
   })
 
   test('Not allowed method with GET', async ({ request }) => {
@@ -47,7 +49,6 @@ test.describe('Login tests', async () => {
 
     console.log(response.statusText())
     expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
-
   })
   test('Not allowed method with PATCH', async ({ request }) => {
     const response = await request.patch('https://backend.tallinn-learning.ee/login/student', {
